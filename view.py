@@ -19,5 +19,6 @@ def creaty_list():
     my_list = input('Введите данные задачи: ')
     return my_list
 
-
-
+def correct_expression():
+    my_list = input('Введите условия задачи корректно: ')
+    return my_list

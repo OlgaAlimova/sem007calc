@@ -6,11 +6,36 @@ def calculator_func(mi_list):
 
     nov_list = model.list_num_creaty(mi_list)
     print(f'nov_list = {nov_list}')
-    calc_step = model.composition(nov_list)
-    print(f'calc_step = {calc_step}')
-    calculator = model.sum_difference(calc_step)
-    logger.logger_str(mi_list, calculator)
-    return calculator
+
+    index_list = model.index_parentheses(nov_list)
+    count = len(index_list)
+
+    while count > 0:
+
+        part_list = model.pair_parentheses(nov_list, index_list)
+        print(f'part_list = {part_list}')
+        calc_step = model.composition(part_list)
+        print(f'calc_stepw = {calc_step}')
+        calculator = model.sum_difference(calc_step)
+        print(f'calculator = {calculator}')
+        nov_list = model.update_list(nov_list, index_list)
+        index_list = model.correct_index_list(index_list)
+        logger.logger_str(nov_list, calculator)
+        print(f'nov_listt = {nov_list}')
+        nov_list = model.change_part_list(nov_list, calculator)
+        print(f'nov_lista = {nov_list}')
+        count -= 2
+        print(count)
+        return nov_list, index_list, count
+
+    else:
+
+        calc_step = model.composition(nov_list)
+        print(f'calc_stepf = {calc_step}')
+        calculator = model.sum_difference(calc_step)
+        print(f'calculator = {calculator}')
+        logger.logger_str(mi_list, calculator)
+
 
 def start_calculator():
 

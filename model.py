@@ -1,3 +1,4 @@
+import view
 
 start_number = 0
 next_number = 0
@@ -128,45 +129,134 @@ def list_num_creaty(mi_list):
     return list_red
     # print(*list_red, sep='')
 
-def composition(mi_list):
+def index_parentheses(mi_list):
+    index_list_open = []
+    index_list_close = []
+    for i in range(len(mi_list)):
+        if mi_list[i] == '(':
+            index_list_open.append(i)
+        elif mi_list[i] == ')':
+            index_list_close.append(i)
+    print(f'index_list_open = {index_list_open}')
+    print(f'index_list_close = {index_list_close}')
+    if len(index_list_open) == len(index_list_close):
+        index_pair = []
+        temporary = index_list_open[0]
+        for j in range(1, len(index_list_open)):
 
-    while ('*' in mi_list) or ('/' in mi_list):
-        item = 0
-        while item < len(mi_list):
-            if mi_list[item] == '*':
-                mi_list[item-1] = mi_list[item-1] * mi_list[item + 1]
-                mi_list.remove(mi_list[item])
-                print(f'mi_list* = {mi_list}')
-                print(f'item = {item}')
-                mi_list.remove(mi_list[item])
-                print(f'mi_list* = {mi_list}')
-            elif mi_list[item] == '/':
-                mi_list[item-1] = int(mi_list[item-1] / mi_list[item + 1])
-                mi_list.remove(mi_list[item])
-                print(f'mi_list/ = {mi_list}')
-                print(f'item = {item}')
-                mi_list.remove(mi_list[item])
-                print(f'mi_list/ = {mi_list}')
+            if index_list_open[j] == (temporary + 1):
+                temp = index_list_open[j-1]
+                index_list_open[j-1] = index_list_open[j]
+                index_list_open[j] = temp
 
-            item += 1
+            index_pair.append(index_list_open[j - 1])
+            index_pair.append(index_list_close[j - 1])
+
+            print(f'index_list_open = {index_list_open}')
+            print(f'index_pair = {index_pair}')
+
+            temporary = index_list_open[j]
+        index_pair.append(index_list_open[j])
+        index_pair.append(index_list_close[j])
+        print(f'index_pair = {index_pair}')
+        return index_pair
+    else:
+        mi_list = view.correct_expression()
+        index_parentheses(mi_list)
+
+def pair_parentheses(mi_list, index_pair):
+    for i in index_pair:
+        part_mi_list = []
+        for j in range(len(mi_list)):
+
+            if j == index_pair[i]:
+                part_mi_list.append(mi_list[j])
+            if index_pair[i] < j <= index_pair[i+1]:
+                part_mi_list.append(mi_list[j])
+        part_mi_list.remove(part_mi_list[0])
+        part_mi_list.remove(part_mi_list[-1])
+        print(f'part_mi_list = {part_mi_list}')
+        return part_mi_list
+
+def update_list(mi_list, index_pair):
+    for i in index_pair:
+        new_mi_list = []
+        for j in range(len(mi_list)):
+
+            if j < index_pair[i]:
+                new_mi_list.append(mi_list[j])
+            if j == index_pair[i]:
+                new_mi_list.append('temp')
+                print(f'new_mi_list = {new_mi_list}')
+            if j > index_pair[i + 1]:
+                new_mi_list.append(mi_list[j])
+                print(f'new_mi_list = {new_mi_list}')
+        print(f'new_mi_list = {new_mi_list}')
+        mi_list = new_mi_list
+        print(f'mi_listk = {mi_list}')
+
+        break
     return mi_list
 
-def sum_difference(mi_list):
-    while ('+' in mi_list) or ('-' in mi_list):
+def correct_index_list(index_pair):
+
+    index_pair.remove(index_pair[0])
+    index_pair.remove(index_pair[0])
+    print(f'index_pair = {index_pair}')
+    return index_pair
+
+def change_part_list(mi_list, calc):
+
+    for i in range(len(mi_list)):
+        if mi_list[i] == 'temp':
+            mi_list[i] = calc[i]
+    return mi_list
+# def search_pair(mi_list,calc):
+#
+#     for i in range(len(in_list)):
+#         print(i)
+
+
+def composition(sm_list):
+
+    while ('*' in sm_list) or ('/' in sm_list):
         item = 0
-        while item < len(mi_list):
-            if mi_list[item] == '+':
-                mi_list[item - 1] = mi_list[item - 1] + mi_list[item + 1]
-                mi_list.remove(mi_list[item])
-                print(f'mi_list+ = {mi_list}')
-                mi_list.remove(mi_list[item])
-                print(f'mi_list+ = {mi_list}')
-            elif mi_list[item] == '-':
-                mi_list[item - 1] = mi_list[item - 1] - mi_list[item + 1]
-                mi_list.remove(mi_list[item])
-                print(f'mi_list- = {mi_list}')
-                mi_list.remove(mi_list[item])
-                print(f'mi_list- = {mi_list}')
+        while item < len(sm_list):
+            if sm_list[item] == '*':
+                sm_list[item-1] = sm_list[item-1] * sm_list[item + 1]
+                sm_list.remove(sm_list[item])
+                print(f'sm_list* = {sm_list}')
+                print(f'item = {item}')
+                sm_list.remove(sm_list[item])
+                print(f'sm_list* = {sm_list}')
+            elif sm_list[item] == '/':
+                sm_list[item-1] = sm_list[item-1] / sm_list[item + 1]
+                sm_list.remove(sm_list[item])
+                print(f'sm_list/ = {sm_list}')
+                print(f'item = {item}')
+                sm_list.remove(sm_list[item])
+                print(f'sm_list/ = {sm_list}')
+            item += 1
+            print(f'sm_list = {sm_list}')
+    return sm_list
+
+
+def sum_difference(stm_list):
+    while ('+' in stm_list) or ('-' in stm_list):
+        item = 0
+        while item < len(stm_list):
+            if stm_list[item] == '+':
+                stm_list[item - 1] = stm_list[item - 1] + stm_list[item + 1]
+                stm_list.remove(stm_list[item])
+                print(f'stm_list+ = {stm_list}')
+                stm_list.remove(stm_list[item])
+                print(f'stm_list+ = {stm_list}')
+            elif stm_list[item] == '-':
+                stm_list[item - 1] = stm_list[item - 1] - stm_list[item + 1]
+                stm_list.remove(stm_list[item])
+                print(f'stm_list- = {stm_list}')
+                stm_list.remove(stm_list[item])
+                print(f'stm_list- = {stm_list}')
 
             item += 1
-    return mi_list
+    return stm_list
